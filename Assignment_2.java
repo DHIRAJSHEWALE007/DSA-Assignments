@@ -1,33 +1,133 @@
+import java.util.Scanner;
 class Assignment_2
 {
     public static void main(String args[])
     {
+        Scanner read = new Scanner(System.in);
+        
         Set s1 = new Set();
         Set s2 = new Set();
 
-        s1.add_element(100);
-        s1.add_element(200);
-        s1.add_element(300);
-        s1.add_element(400);
+        boolean flag = true;
+        while(flag)
+        {
+            System.out.println("  +---------------------------------------------------------+  ");
+            System.out.println("  |  1)  Add Element to Set 1.                              |  ");
+            System.out.println("  |  2)  Add Element to Set 2.                              |  ");
+            System.out.println("  |  3)  Remove Element from Set 1.                         |  ");
+            System.out.println("  |  4)  Remove Element from Set 2.                         |  ");
+            System.out.println("  |  5)  display Elements of Set 1.                         |  ");
+            System.out.println("  |  6)  display Elements of Set 2.                         |  ");
+            System.out.println("  |  7)  Total number of Elements in Set 1.                 |  ");
+            System.out.println("  |  8)  Total number of Elements in Set 2.                 |  ");
+            System.out.println("  |  9)  Check, is element present or not in Set 1 ?        |  ");
+            System.out.println("  | 10)  Check, is element present or not in Set 2 ?        |  ");
+            System.out.println("  | 11)  Intersection of Sets.                              |  ");
+            System.out.println("  | 12)  Union of Sets.                                     |  ");
+            System.out.println("  | 13)  Difference of Sets.                                |  ");
+            System.out.println("  | 14)  Exit.                                              |  ");
+            System.out.println("  +---------------------------------------------------------+  ");
+            System.out.println("  |  ~ Enter Your Choice :                                  |  ");
+            int ch = read.nextInt();
+            System.out.println("  +---------------------------------------------------------+  ");
 
-        s2.add_element(500);
-        s2.add_element(400);
-        s2.add_element(300);
-        s2.add_element(600);
-        s2.add_element(700);
-
-        Set s3 = s1.intersection(s2);
-        Set s4 = s1.union(s2);
-        Set s5 = s1.difference(s2);
-        s1.display();
-        s2.display();
-        s3.display();
-        s4.display();
-        s5.display();
+            switch(ch)
+            {
+                case 1 :
+                    {
+                        System.out.println("Enter the element for adding to a set 1 :");
+                        int ele = read.nextInt();
+                        s1.add_element(ele);
+                        break;
+                    }
+                case 2 :
+                    {
+                        System.out.println("Enter the element for adding to a set 2 :");
+                        int ele = read.nextInt();
+                        s2.add_element(ele);
+                        break;
+                    }
+                case 3 :
+                    {
+                        System.out.println("Enter the element for removing from a set 1 :");
+                        int ele = read.nextInt();
+                        s1.remove_element(ele);
+                        break;
+                    }
+                case 4 :
+                    {
+                        System.out.println("Enter the element for removing from a set 2 :");
+                        int ele = read.nextInt();
+                        s2.remove_element(ele);
+                        break;
+                    }
+                case 5 : 
+                    {
+                        System.out.println("Elements of set 1 : ");
+                        s1.display();
+                        break;
+                    }
+                case 6 : 
+                    {
+                        System.out.println("Elements of set 2 : ");
+                        s2.display();
+                        break;
+                    }
+                case 7 : 
+                    {
+                        s1.total_values();
+                        break;
+                    }
+                case 8 : 
+                    {
+                        s2.total_values();
+                        break;
+                    }
+                case 9 : 
+                    {
+                        System.out.println("Enter the Element to check : ");
+                        int z = read.nextInt();
+                        boolean y = s1.ispresent(z);
+                        System.out.println(y);
+                        break;
+                    }
+                case 10 : 
+                    {
+                        System.out.println("Enter the Element to check : ");
+                        int z = read.nextInt();
+                        boolean y = s2.ispresent(z);
+                        System.out.println(y);
+                        break;
+                    }
+                case 11 : 
+                    {
+                        s1.intersection(s2);
+                        break;
+                    }
+                case 12 : 
+                    {
+                        s1.union(s2);
+                        break;
+                    }
+                case 13 : 
+                    {
+                        s1.difference(s2);
+                        break;
+                    }
+                case 14 : 
+                    {
+                        System.out.println("Thank you for your time.");
+                        flag = false;
+                        break;
+                    } 
+            }
+            System.out.println("  ***********************************************************  ");
+        }
     }
 }
 
 // Set As ADT
+
 class Set
 {
     int size;
@@ -99,7 +199,7 @@ class Set
 
     // Return Size of an set 
 
-    public int total_values()
+    public void total_values()
     {
         int count = 0;
         for (int i=0;i < size;i++)
@@ -109,12 +209,12 @@ class Set
                 count++;
             }
         }
-        return count;
+        System.out.println("Total number of elements are : " + count);
     }
 
     // Return Intersection of sets
 
-    public Set intersection(Set s)
+    public void intersection(Set s)
     {
         Set temp = new Set();
         for(int i=0;i<size;i++)
@@ -127,12 +227,13 @@ class Set
                 }
             }
         }
-        return temp;
+        System.out.println("Intersection  of both sets is : ");
+        temp.display();
     }
 
     // Return Union of sets
 
-    public Set union(Set s)
+    public void union(Set s)
     {
         Set temp = new Set();
         for(int i=0;i<size;i++)
@@ -144,35 +245,43 @@ class Set
             temp.add_element(s.set[i]);
         }
 
-        return temp;
+        System.out.println("Union  of both sets is : ");
+        temp.display();
     }
 
     // Return Difference of sets
 
-    public Set difference(Set s)
+    public void difference(Set s)
     {
         Set temp = new Set();
-        temp.set = set;
+        for(int k=0;k<size;k++)
+        {
+            temp.set[k]=set[k];
+        }
+
         for(int i=0;i<size;i++)
         {
             for(int j=0;j<size;j++)
             {
-                if (set[i]==s.set[j])
+                if (temp.set[i]==s.set[j])
                 {
-                    temp.remove_element(set[i]);
+                    temp.remove_element(temp.set[i]);
                 }
             }
         }
-        return temp;
+        System.out.println("Difference of both sets is : ");
+        temp.display();
     }
 
     // Display the set
     
     public void display()
     {
+        System.out.println("  +--------------+  ");
         for(int i=0;i<size;i++)
         {   if(set[i]!=0)
-                System.out.println(set[i]);
+                System.out.println("  |     "+ set[i] +"      |  ");
         }
+        System.out.println("  +--------------+  ");
     }
 }
