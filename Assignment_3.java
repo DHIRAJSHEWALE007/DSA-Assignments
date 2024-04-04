@@ -32,20 +32,25 @@
                     }
                 case 2 :
                     {
-                        System.out.println("Enter The Element TO Insert In A Tree : ");
+                        System.out.println("Enter The Element To Insert In A Tree : ");
                         int ele = read.nextInt();
-                        t1.insert_element(t1.root,ele);
+                        t1.insert_node(t1.root,ele);
                         break;
                     }
                 case 3 :
                     {
-                        System.out.println("Enter The Element TO Search In A Tree : ");
+                        t1.cnt = 0;
+                        System.out.println("Enter The Element To Search In A Tree : ");
                         int ele = read.nextInt();
                         t1.search(ele);
                         break;
                     }
                 case 4 :
                     {
+                        t1.array_of_nodes = new int[t1.total_nodes];
+                        t1.cnt = 0;
+                        t1.inorder(t1.root);
+
                         for (int i = 0; i < t1.total_nodes; i++)
                         {
                             System.out.println(t1.array_of_nodes[i]);
@@ -55,8 +60,7 @@
                 case 5 : 
                     {
                         System.out.println("Total Number Of Nodes In a Tree Are : ");
-                        t1.inorder(t1.root);
-                        System.out.println(t1.cnt);
+                        System.out.println(t1.total_nodes);
                         break;
                     }
                 case 6 : 
@@ -76,7 +80,7 @@
  {
     public Node root = null;
     public int array_of_nodes[];
-    public int total_nodes;
+    public int total_nodes = 0;
     public int cnt = 0;
 
     public void create_tree()
@@ -84,59 +88,30 @@
         Scanner read = new Scanner(System.in);
 
         System.out.println("Enter The Total Number of Nodes : ");
-        total_nodes = read.nextInt();
-        array_of_nodes = new int[total_nodes];
+        int total = read.nextInt();
 
-        for (int i = 0; i < total_nodes; i++)
+        for (int i = 0; i < total; i++)
         {
-            Node new_node = new Node();
-            System.out.println("Enter The Data Of Node " + (i+1) +" : ");
-            int data = read.nextInt();
-            new_node.data = data;
-
             if (root == null)
             {
+                Node new_node = new Node();
+                System.out.println("Enter The Data Of Node " + (i+1) +" : ");
+                int data = read.nextInt();
+                new_node.data = data;
+
                 root = new_node;
                 System.out.println("Node " + data + " Is Initialized As A Root Node !");
+                total_nodes++;
             }
             else
             {
-                insert_node(root,new_node);
+                System.out.println("Enter The Data Of Node " + (i+1) +" : ");
+                int data = read.nextInt();
+                insert_node(root,data);
             }
         }
     }
-    public void insert_node(Node parent_node, Node new_node)
-    {
-        Node temp = parent_node;
-
-        if (new_node.data <= temp.data)
-        {
-            if (temp.left == null)
-            {   
-                temp.left = new_node;
-                System.out.println("Node " + new_node.data + " Inserted At Left Of Parent Node");
-            }
-            else
-            {
-                insert_node(temp.left,new_node);
-            }
-        }
-        else
-        {
-            if (temp.right == null)
-            {   
-                temp.right = new_node;
-                System.out.println("Node " + new_node.data + " Inserted At Right Of Parent Node");
-
-            }
-            else
-            {
-                insert_node(temp.right,new_node);
-            }
-        }
-    }
-
-    public void insert_element(Node parent_node, int value)
+    public void insert_node(Node parent_node, int value)
     {
         Node temp = parent_node;
         Node new_node = new Node();
@@ -147,11 +122,12 @@
             if (temp.left == null)
             {   
                 temp.left = new_node;
+                total_nodes++;
                 System.out.println("Node " + new_node.data + " Inserted At Left Of Parent Node");
             }
             else
             {
-                insert_element(temp.left,value);
+                insert_node(temp.left,value);
             }
         }
         else
@@ -159,19 +135,19 @@
             if (temp.right == null)
             {   
                 temp.right = new_node;
+                total_nodes++;
                 System.out.println("Node " + new_node.data + " Inserted At Right Of Parent Node");
 
             }
             else
             {
-                insert_element(temp.right,value);
+                insert_node(temp.right,value);
             }
         }
     }
 
     public void inorder(Node temp)
     {
-        
         if (temp != null)
         {
             inorder(temp.left);
@@ -183,6 +159,7 @@
     public void search(int value)
     {
         inorder(root);
+
         String result = "Node Not Found";
         for (int i = 0; i < cnt; i++)
         {
